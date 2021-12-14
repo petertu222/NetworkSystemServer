@@ -153,9 +153,9 @@ public class NetworkedServer : MonoBehaviour
             {
                 GameSession gs = new GameSession(playerWaitingForMatch, id);
                 gameSessions.AddLast(gs);
+                Debug.Log(gs.playerID1 + " " + gs.playerID2);
                 SendMessageToClient(ServerToClientSignifiers.GameSeesionStarted + "", id);
                 SendMessageToClient(ServerToClientSignifiers.GameSeesionStarted + "", playerWaitingForMatch);
-
                 playerWaitingForMatch = -1;
                 
             }
@@ -168,15 +168,79 @@ public class NetworkedServer : MonoBehaviour
             if (gs.playerID1 == id)
             {
                 SendMessageToClient(ServerToClientSignifiers.OpponentTicTacToePlay + "", gs.playerID2);//Player two's turn
-                Debug.Log("now it's p2 turn");
+                Debug.Log("now it's"+gs.playerID2+"turn");
             }
             else
             {
                 SendMessageToClient(ServerToClientSignifiers.OpponentTicTacToePlay + "", gs.playerID1);//Player one's turn
-                Debug.Log("now it's p1's turn");
+                Debug.Log("now it's" + gs.playerID1 + "turn");
             }
 
 
+        }
+        else if (signifier == ClientToServerSignifiers.Message1)
+        {
+            GameSession gs = FindGameSessionWithPlayerID(id);
+            //int messageType = csv[1];
+
+            if (gs.playerID1 == id)
+            {
+                SendMessageToClient(ServerToClientSignifiers.MessageResponse1 + "", gs.playerID2);//Player two's turn
+                
+            }
+            else
+            {
+                SendMessageToClient(ServerToClientSignifiers.MessageResponse1 + "", gs.playerID1);//Player one's turn
+                
+            }
+        }
+        else if (signifier == ClientToServerSignifiers.Message2)
+        {
+            GameSession gs = FindGameSessionWithPlayerID(id);
+            //int messageType = csv[1];
+
+            if (gs.playerID1 == id)
+            {
+                SendMessageToClient(ServerToClientSignifiers.MessageResponse2 + "", gs.playerID2);//Player two's turn
+
+            }
+            else
+            {
+                SendMessageToClient(ServerToClientSignifiers.MessageResponse2 + "", gs.playerID1);//Player one's turn
+
+            }
+        }
+        else if (signifier == ClientToServerSignifiers.Message3)
+        {
+            GameSession gs = FindGameSessionWithPlayerID(id);
+            //int messageType = csv[1];
+
+            if (gs.playerID1 == id)
+            {
+                SendMessageToClient(ServerToClientSignifiers.MessageResponse3 + "", gs.playerID2);//Player two's turn
+
+            }
+            else
+            {
+                SendMessageToClient(ServerToClientSignifiers.MessageResponse3 + "", gs.playerID1);//Player one's turn
+
+            }
+        }
+        else if (signifier == ClientToServerSignifiers.Message4)
+        {
+            GameSession gs = FindGameSessionWithPlayerID(id);
+            //int messageType = csv[1];
+
+            if (gs.playerID1 == id)
+            {
+                SendMessageToClient(ServerToClientSignifiers.MessageResponse4 + "", gs.playerID2);//Player two's turn
+
+            }
+            else
+            {
+                SendMessageToClient(ServerToClientSignifiers.MessageResponse4 + "", gs.playerID1);//Player one's turn
+
+            }
         }
     }
 
@@ -255,6 +319,10 @@ public static class ClientToServerSignifiers
     public const int CreateAccount = 2;
     public const int AddToGameSessionQueue = 3;
     public const int TicTacToePlay = 4;
+    public const int Message1 = 5;
+    public const int Message2 = 6;
+    public const int Message3 = 7;
+    public const int Message4 = 8;
 }
 
 public static class ServerToClientSignifiers
@@ -262,7 +330,11 @@ public static class ServerToClientSignifiers
     public const int LoginResponse = 1;
     public const int GameSeesionStarted = 2;
     public const int OpponentTicTacToePlay = 3;
-
+    public const int WaitingForTurn = 4;
+    public const int MessageResponse1 = 5;
+    public const int MessageResponse2 = 6;
+    public const int MessageResponse3 = 7;
+    public const int MessageResponse4 = 8;
 
 
     //public const int LoginFailure = 2;
